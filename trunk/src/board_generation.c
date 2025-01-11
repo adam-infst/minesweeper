@@ -1,39 +1,44 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include <stdbool.h>
 #include "board_generation.h"
 
 /* oznaczenia pól planszy: e = empty, m = mine, f = flag, u = uncovered */
 /* oznaczenia poziomu trudności: 1 = łatwy, 2 = średni, 3 = trudny */
-char **CreateBoard (int y, int x, int difficulty) /* jako pierwszy podaje się numer wiersza, a on odpowiada współrzędnej y (dlatego niealfabetyczna kolejność) */
-{
-    int height, width, mineQuantity;
-    char **board;
-    switch (difficulty)
-    {
-    case 1:
-        height = 9;
-        width = 9;
-        mineQuantity = 10;
-        break;
+void SetBoardParameters(int difficulty, int *height, int *width, int *mineQuantity) {
+    switch (difficulty) {
+        case 1: // Easy
+            *height = 9;
+            *width = 9;
+            *mineQuantity = 10;
+            break;
         
-    case 2:
-        height = 16;
-        width = 16;
-        mineQuantity = 40;
-        break;
+        case 2: // Medium
+            *height = 16;
+            *width = 16;
+            *mineQuantity = 40;
+            break;
 
-    case 3:
-        height = 16;
-        width = 30;
-        mineQuantity = 99;
-        break;
-    
-    default:
-        break;
+        case 3: // Hard
+            *height = 16;
+            *width = 30;
+            *mineQuantity = 99;
+            break;
+
+        default: // Invalid difficulty
+            *height = 0;
+            *width = 0;
+            *mineQuantity = 0;
+            break;
     }
+}
+char **CreateEmptyBoard (int y, int x, int difficulty, bool mines) /* jako pierwszy podaje się numer wiersza, a on odpowiada współrzędnej y (dlatego niealfabetyczna kolejność) */
+{
 
+    int height, width, mineQuantity;
+    SetBoardParameters(difficulty, &height, &width, &mineQuantity);
+    char **board;
     board = malloc (height * sizeof(*board));
     for (int i = 0; i < height; i++)
     {
@@ -47,11 +52,30 @@ char **CreateBoard (int y, int x, int difficulty) /* jako pierwszy podaje się n
             board[i][j] = 'e';
         }
     }
+    if (mines == 1){
+        PlaceMines (y, x, height, width, mineQuantity, board);
+    }
     
-    PlaceMines (y, x, height, width, mineQuantity, board);
     return board;
 }
 
+void PrintBoard(int height, int width, char **board) {
+    // Print column numbers
+    printf("   ");
+    for (int col = 0; col < width; col++) {
+        printf("%2d ", col);
+    }
+    printf("\n");
+
+    // Print the board rows
+    for (int row = 0; row < height; row++) {
+        printf("%2d ", row); // Row numbers
+        for (int col = 0; col < width; col++) {
+            printf("%2c ", board[row][col]);
+        }
+        printf("\n");
+    }
+}
 void PlaceMines (int y, int x, int height, int width, int mineQuantity, char **board)
 {
     srand(time(NULL));
