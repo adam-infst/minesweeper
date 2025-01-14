@@ -1,0 +1,6 @@
+/.vscode/
+
+/bin/*
+# specjalnie pomiajam zawartosć bin zamiast samego folderu, bo w moim WSL przy kompilacji do bin/__.exe  
+# bin nie tworzy się automatycznie, za to jest błąd że folder nie istnieje i muszę go manualnie dodawać
+# A pusty folder chyba nikomu nie przeszkadza.

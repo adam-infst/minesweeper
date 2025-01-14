@@ -33,9 +33,9 @@ void SetBoardParameters(int difficulty, int *height, int *width, int *mineQuanti
             break;
     }
 }
+
 char **CreateEmptyBoard (int y, int x, int difficulty, bool mines) /* jako pierwszy podaje się numer wiersza, a on odpowiada współrzędnej y (dlatego niealfabetyczna kolejność) */
 {
-
     int height, width, mineQuantity;
     SetBoardParameters(difficulty, &height, &width, &mineQuantity);
     char **board;
@@ -76,6 +76,7 @@ void PrintBoard(int height, int width, char **board) {
         printf("\n");
     }
 }
+
 void PlaceMines (int y, int x, int height, int width, int mineQuantity, char **board)
 {
     srand(time(NULL));
@@ -92,9 +93,31 @@ void PlaceMines (int y, int x, int height, int width, int mineQuantity, char **b
     }
 }
 
-void TestBoardGeneration (int height, int width, char **board)
+void TestBoardGeneration (int difficulty, char **board)
 {
-    int i, j, mineCount;
+    int i, j, height, width, mineCount;
+    switch (difficulty) {
+        case 1:
+            height = 9;
+            width = 9;
+            break;
+        
+        case 2:
+            height = 16;
+            width = 16;
+            break;
+
+        case 3:
+            height = 16;
+            width = 30;
+            break;
+
+        default:
+            height = 0;
+            width = 0;
+            break;
+    }
+
     for (i = 0; i < height; i++)
     {
         for (j = 0; j < width; j++)
@@ -102,7 +125,7 @@ void TestBoardGeneration (int height, int width, char **board)
             switch (board[i][j])
             {
             case 'e':
-                printf(" .");
+                printf(" -");
                 break;
 
             case 'm':
@@ -117,5 +140,5 @@ void TestBoardGeneration (int height, int width, char **board)
         }
         printf("\n");
     }
-    printf("\nHeight: %d \nWidth: %d \nMines: %d \n", i, j, mineCount);
+    printf("\nHeight: %d \nWidth: %d \nDetected mines: %d \n", i, j, mineCount);
 }
