@@ -1,10 +1,11 @@
 #ifndef BOARD_GENERATION_H
 #define BOARD_GENERATION_H
-#include <stdbool.h>
+#include "board_data_structure.h"
 
-char **CreateEmptyBoard (int y, int x, int difficulty, bool mines);
-void PlaceMines (int y, int x, int height, int width, int mineQuantity, char **board);
-void TestBoardGeneration (int difficulty, char **board);
-void PrintBoard(int height, int width, char **board);
+void SetBoardParameters(int difficulty, board_data_t* data);
+char **CreateEmptyBoard (board_data_t* data);
+void PlaceMines (int y, int x, board_data_t* data);
+void TestBoardGeneration (board_data_t* data);
+void PrintBoard(board_data_t* data);
 
 #endif

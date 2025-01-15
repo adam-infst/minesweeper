@@ -2,21 +2,22 @@
 
 #include "board_generation.h"
 #include "get_input.h"
-#include "change_board_state.h"
+#include "update_board_state.h"
+#include "board_data_structure.h"
 
 int main (int argc, char **argv)
 {
-    int strzalX, strzalY, difficulty;
+    int difficulty;
     printf("Podaj trudność od 1 do 3: ");
     scanf("%d", &difficulty);
-    char **board = CreateEmptyBoard(0, 0, difficulty, 0);
-    PrintBoard(10, 10, board); // 10 jest tymczasowe
-    printf("Podaj X strzału: ");
-    scanf("%d", &strzalX);
-    printf("Podaj Y strzału: ");
-    scanf("%d", &strzalY);
-    char **boardWithMines = CreateEmptyBoard(strzalX, strzalX, difficulty, 1);
-    PrintBoard(10, 10, boardWithMines);
-    get_move(stdin); /* tylko po to żeby sprawdzić czy się kompiluje */
+
+    board_data_t* board_data = init(difficulty);
+
+    PrintBoard(board_data);
+    get_move(stdin, board_data);
+    PrintBoard(board_data);
+    TestBoardGeneration(board_data);
+
+    FreeBoardData(board_data);
     return 0;
 }
