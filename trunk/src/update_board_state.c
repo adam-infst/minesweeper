@@ -103,7 +103,7 @@ void MakeMove (int y, int x, board_data_t* data, char action)
     case 'm': /* mina */
         if (action == 'f') PutFlag(y, x, data->board, true);
         else 
-            DetonateMine();
+            DetonateMine(data->board);
         break;
 
     case 'f': /* flaga na polu bez miny */
@@ -115,7 +115,7 @@ void MakeMove (int y, int x, board_data_t* data, char action)
     case 'F': /* flaga na minie */
         if (action == 'f') printf("! Tried to put a flag on a tile that already had a flag !\n");
         else
-            DetonateMine();
+            DetonateMine(data->board);
         break;
 
     case 'u': /* odkryte pole */
@@ -138,7 +138,8 @@ void MakeMove (int y, int x, board_data_t* data, char action)
     }
 }
 
-void DetonateMine()
+void DetonateMine(char **board)
 {
+    board[0][0] = 'B';
     printf("Zdetonowano mine! Powinienes teraz przegrac ale jeszcze nikt nie zaimplementowal tej funkcji :)\n");
 }

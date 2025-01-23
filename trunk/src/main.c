@@ -38,7 +38,7 @@ int main (int argc, char **argv)
         board_data = ReadBoardFromFile(in);
     }
 
-    while (true) // trzeba dodać WARUNEK
+    while (board_data->board[0][0] != 'B') // trzeba dodać WARUNEK
     {
         if (in == stdin) {
             PrintBoard(board_data);
