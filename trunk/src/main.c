@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <getopt.h>
-
 #include "board_generation.h"
 #include "update_board_state.h"
 #include "board_data_structure.h"
@@ -45,6 +44,7 @@ int main (int argc, char **argv)
             PrintBoard(board_data);
             //TestBoardGeneration(board_data);
         }
+        printf("_ x y (_ -> f - flag r - reveal)\n");
         GetMove(in, board_data);
     }
 

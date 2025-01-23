@@ -23,10 +23,10 @@ int CountMinesAround(int y, int x, board_data_t* data)
             int ny = y + dy;
             int nx = x + dx;
 
-            if (ny >= 0 && ny < data->height && nx >= 0 && nx < data->width && data->board[ny][nx] == 'm')
-            {
-                mineCount++;
-            }
+            if (ny >= 0 && ny < data->height && nx >= 0 && nx < data->width && (data->board[ny][nx] == 'm' || data->board[ny][nx] == 'F'))
+                {
+                    mineCount++;
+                }
         }
     }
     return mineCount;
