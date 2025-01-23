@@ -16,7 +16,7 @@ int main (int argc, char **argv)
     PrintBoard(board_data);
     get_move(stdin, board_data);
     PrintBoard(board_data);
-    TestBoardGeneration(board_data);
+    //TestBoardGeneration(board_data);
 
     FreeBoardData(board_data);
     return 0;

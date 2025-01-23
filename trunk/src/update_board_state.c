@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "update_board_state.h"
 
@@ -9,24 +10,58 @@ void PutFlag(int y, int x, char **board, bool isMine)
         board[y][x] = 'f';
 }
 
+int CountMinesAround(int y, int x, board_data_t* data)
+{
+    int mineCount = 0;
+    for (int dy = -1; dy <= 1; ++dy)
+    {
+        for (int dx = -1; dx <= 1; ++dx)
+        {
+            if (dy == 0 && dx == 0) continue;
+
+            int ny = y + dy;
+            int nx = x + dx;
+
+            if (ny >= 0 && ny < data->height && nx >= 0 && nx < data->width && data->board[ny][nx] == 'm')
+            {
+                mineCount++;
+            }
+        }
+    }
+    return mineCount;
+}
+
 void Reveal(int y, int x, board_data_t* data)
 {
     if (data->board[y][x] != 'e' && data->board[y][x] != 'f')  return;
-    
-    data->board[y][x] = 'u';
-    data->revealedTiles++;
 
-    if (x - 1 >= 0) 
-        Reveal(y, x - 1, data);
+    int minesAround = CountMinesAround(y, x, data);
 
-    if (x + 1 < data->width) 
-        Reveal(y, x + 1, data);
+    if (minesAround > 0)
+    {
+        data->board[y][x] = '0' + minesAround;
+    }
+    else
+    {
+        data->board[y][x] = 'u';
+        data->revealedTiles++;
 
-    if (y - 1 >= 0) 
-        Reveal(y - 1, x, data);
-    
-    if (y + 1 < data->height) 
-        Reveal(y + 1, x, data);
+        for (int dy = -1; dy <= 1; ++dy)
+        {
+            for (int dx = -1; dx <= 1; ++dx)
+            {
+                if (dy == 0 && dx == 0) continue;
+
+                int ny = y + dy;
+                int nx = x + dx;
+
+                if (ny >= 0 && ny < data->height && nx >= 0 && nx < data->width)
+                {
+                    Reveal(ny, nx, data);
+                }
+            }
+        }
+    }
 }
 
 void MakeMove (int y, int x, board_data_t* data, char action)
