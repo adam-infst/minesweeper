@@ -26,7 +26,7 @@ int main (int argc, char **argv)
 
     if (in == stdin) {
         int difficulty;
-        printf("Podaj trudność: (1 = łatwy, 2 = średni, 3 = trudny, 0 = własny) ");
+        printf("Podaj trudność: (1 = łatwy, 2 = średni, 3 = trudny, 0 = własny)\n");
         scanf("%d", &difficulty);
 
         if (difficulty < 0 || difficulty > 3) {
@@ -73,10 +73,11 @@ int main (int argc, char **argv)
 
     SaveScoreToFile("wyniki.txt", player);
 
-    //5 najlpszych graczy
+
     player_score_t scores[100];  // Możemy przechować  100 wyników
     int scoreCount = 0;
     LoadScoresFromFile("wyniki.txt", scores, &scoreCount);
+    
     DisplayTop5Scores(scores, scoreCount);
 
     if (in != stdin) {
