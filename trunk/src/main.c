@@ -38,7 +38,7 @@ int main (int argc, char **argv)
         board_data = ReadBoardFromFile(in);
     }
 
-    while (board_data->board[0][0] != 'B') // trzeba dodać WARUNEK
+    while (board_data->board[0][0] != 'B' && CheckWinCondition(board_data) == 0) // trzeba dodać WARUNEK
     {
         if (in == stdin) {
             PrintBoard(board_data);
@@ -46,8 +46,17 @@ int main (int argc, char **argv)
         }
         printf("_ x y (_ -> f - flag r - reveal)\n");
         GetMove(in, board_data);
+        
     }
+    if(board_data->board[0][0] == 'B')
+    {
+        printf("BOOM!! Wybuchłeś");
+    }
+    else
+    {
+        printf("Brawo! wygrałeś");
 
+    }
     if (in != stdin) {
         fclose(in);     // nwm czy tego nie trzeba będzie osobno w funkcji DetonateMine()
     }

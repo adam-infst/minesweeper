@@ -10,7 +10,21 @@ void PutFlag(int y, int x, char **board, bool isMine)
     else
         board[y][x] = 'f';
 }
-
+bool CheckWinCondition(board_data_t* data) {
+    // Check if all non-mine tiles have been revealed or flagged correctly
+    for (int y = 0; y < data->height; ++y) {
+        for (int x = 0; x < data->width; ++x) {
+            // Check if it's a non-mine tile
+            if (data->board[y][x] != 'm' && data->board[y][x] != 'M') {
+                // If it's still covered (empty or flagged incorrectly), the game is not won
+                if (data->board[y][x] == 'e' || data->board[y][x] == 'f') {
+                    return false; // There are still hidden tiles
+                }
+            }
+        }
+    }
+    return true; // All non-mine tiles are either revealed or flagged correctly
+}
 int CountMinesAround(int y, int x, board_data_t* data)
 {
     int mineCount = 0;
