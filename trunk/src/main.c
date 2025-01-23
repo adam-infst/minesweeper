@@ -8,8 +8,13 @@
 int main (int argc, char **argv)
 {
     int difficulty;
-    printf("Podaj trudność od 1 do 3: ");
+    printf("Podaj trudność: (1 = łatwy, 2 = średni, 3 = trudny, 0 = własny) ");
     scanf("%d", &difficulty);
+
+    if (difficulty < 0 || difficulty > 3) {
+        printf("! Podano niewłaściwy poziom trudności. Utworzono planszę o trudności 'średni' \n");
+        difficulty = 2;
+    }
 
     board_data_t* board_data = init(difficulty);
 
