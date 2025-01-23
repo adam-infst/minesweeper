@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <getopt.h>
+#include <string.h> 
 #include "board_generation.h"
 #include "update_board_state.h"
 #include "board_data_structure.h"
+#include "leaderboard.h" 
 
 int main (int argc, char **argv)
 {
@@ -38,7 +40,7 @@ int main (int argc, char **argv)
         board_data = ReadBoardFromFile(in);
     }
 
-    while (board_data->board[0][0] != 'B' && CheckWinCondition(board_data) == 0) // trzeba dodać WARUNEK
+    while (board_data->board[0][0] != 'B' && CheckWinCondition(board_data) == 0) 
     {
         if (in == stdin) {
             PrintBoard(board_data);
@@ -48,7 +50,7 @@ int main (int argc, char **argv)
         GetMove(in, board_data);
         
     }
-    GetScore(board_data);
+    
     if(board_data->board[0][0] == 'B')
     {
         printf("BOOM!! Wybuchłeś");
@@ -56,8 +58,27 @@ int main (int argc, char **argv)
     else
     {
         printf("Brawo! wygrałeś");
-
     }
+
+    printf("Score: %d\n",GetScore(board_data));
+
+    char playerName[50];
+
+    printf("Podaj swoje imię: ");
+    scanf("%s", playerName);
+
+    player_score_t player;
+    strcpy(player.name, playerName);
+    player.score = GetScore(board_data);
+
+    SaveScoreToFile("wyniki.txt", player);
+
+    //5 najlpszych graczy
+    player_score_t scores[100];  // Możemy przechować  100 wyników
+    int scoreCount = 0;
+    LoadScoresFromFile("wyniki.txt", scores, &scoreCount);
+    DisplayTop5Scores(scores, scoreCount);
+
     if (in != stdin) {
         fclose(in);     // nwm czy tego nie trzeba będzie osobno w funkcji DetonateMine()
     }
