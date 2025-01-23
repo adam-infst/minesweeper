@@ -8,7 +8,7 @@ board_data_t* init(int difficulty)
 {
     board_data_t* data = malloc(sizeof(board_data_t));
     if (difficulty == 0) {
-        SetCustomParamiters(data);
+        SetCustomParameters(data);
     }
     else {
         SetBoardParameters(difficulty, data);

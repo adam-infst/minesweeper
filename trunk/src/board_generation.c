@@ -38,7 +38,7 @@ void SetBoardParameters(int difficulty, board_data_t* data)
     }
 }
 
-void SetCustomParamiters(board_data_t* data)
+void SetCustomParameters(board_data_t* data)
 {
     data->difficulty = 1; // żeby liczyło wynik jako ilość odkrytych * 1
     data->revealedTiles = 0;
@@ -92,6 +92,11 @@ void PlaceMines (int y, int x, board_data_t* data)
         }
         else i--; /* jeśli trafi na już zaminowane pole to spróbuje znowu */
     }
+}
+
+board_data_t* ReadBoardFromFile(FILE *in) {
+
+    return NULL;
 }
 
 void PrintBoard(board_data_t* data)
