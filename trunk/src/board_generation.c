@@ -38,6 +38,24 @@ void SetBoardParameters(int difficulty, board_data_t* data)
     }
 }
 
+void SetCustomParamiters(board_data_t* data)
+{
+    data->difficulty = 1; // żeby liczyło wynik jako ilość odkrytych * 1
+    data->revealedTiles = 0;
+
+    printf("Podaj wysokość planszy: ");
+    scanf("%d", &data->height);
+    printf("Podaj szerokość planszy: ");
+    scanf("%d", &data->width);
+    printf("Podaj ilość min: ");
+    scanf("%d", &data->mineQuantity);
+
+    if (data->height < 1 || data->width < 1 || data->mineQuantity > data->height * data->width - 1) {
+        printf("! Niepoprawne dane. Utworzono planszę o średnim poziomie trudności");
+        SetBoardParameters(2, data);
+    }
+}
+
 char **CreateEmptyBoard (board_data_t* data) /* jako 1szy przyjmuje nr wiersza, czyli y (dlatego niealfabetyczna kolejność, tego standardu używa cały program) */
 {
     char **board;

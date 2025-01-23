@@ -7,7 +7,12 @@
 board_data_t* init(int difficulty)
 {
     board_data_t* data = malloc(sizeof(board_data_t));
-    SetBoardParameters(difficulty, data);
+    if (difficulty == 0) {
+        SetCustomParamiters(data);
+    }
+    else {
+        SetBoardParameters(difficulty, data);
+    }
     data->board = CreateEmptyBoard(data);
     return data;
 }
