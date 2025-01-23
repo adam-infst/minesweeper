@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "leaderboard.h"
 
 void SaveScoreToFile(const char* filename, player_score_t player) {
