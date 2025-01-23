@@ -48,6 +48,7 @@ int main (int argc, char **argv)
         GetMove(in, board_data);
         
     }
+    GetScore(board_data);
     if(board_data->board[0][0] == 'B')
     {
         printf("BOOM!! Wybuchłeś");
