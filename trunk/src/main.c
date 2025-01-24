@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <getopt.h>
-#include <string.h> 
+#include <string.h>
+#include <stdlib.h>
 #include "board_generation.h"
 #include "update_board_state.h"
 #include "board_data_structure.h"
@@ -39,9 +40,13 @@ int main (int argc, char **argv)
     else {
         board_data = ReadBoardFromFile(in);
     }
-
+    int moveCount = 0;
     while (board_data->board[0][0] != 'B' && CheckWinCondition(board_data) == 0) 
     {
+        moveCount++;
+        system("clear");
+        printf("Score: %d\n",GetScore(board_data));
+        printf("Ruch numer: %d\n",moveCount);
         if (in == stdin) {
             PrintBoard(board_data);
             //TestBoardGeneration(board_data);
