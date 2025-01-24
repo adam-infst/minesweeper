@@ -78,15 +78,27 @@ char **CreateEmptyBoard (board_data_t* data) /* jako 1szy przyjmuje nr wiersza, 
 
 void PlaceMines (int y, int x, board_data_t* data)
 {
+    int am;
     srand(time(NULL));
     for (int i = 0; i < data->mineQuantity; i++)
     {
         int a = rand() % data->height;
         int b = rand() % data->width;
+        am = 0;
+        for (int dy = -1; dy <= 1; ++dy) {
+            for (int dx = -1; dx <= 1; ++dx) {
 
-        if (a == y && b == x) i--;
-        /* jeśli trafi na pierwsze pole które próbujemy odkryć to spróbuje znowu */
-        else if (data->board[a][b] == 'e')
+                int ny = y + dy;
+                int nx = x + dx;
+                if (a == ny && b == nx) {
+                    i--;
+                    dy = 2;
+                    dx = 2;
+                    am = 1;
+                }
+            }
+        }
+        if (data->board[a][b] == 'e' && am == 0)
         {
             data->board[a][b] = 'm';
         }
