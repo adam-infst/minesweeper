@@ -46,10 +46,27 @@ int CountMinesAround(int y, int x, board_data_t* data)
     return mineCount;
 }
 
-void Reveal(int y, int x, board_data_t* data)
+void Reveal(int y, int x, board_data_t* data, int isFirstMove)
 {
-    if (data->board[y][x] != 'e' && data->board[y][x] != 'f')  return;
+    if (isFirstMove) {
+        for (int dy = -1; dy <= 1; ++dy) {
+            for (int dx = -1; dx <= 1; ++dx) {
+                if (dy == 0 && dx == 0) continue;
 
+                int ny = y + dy;
+                int nx = x + dx;
+                if (ny >= 0 && ny < data->height && nx >= 0 && nx < data->width && CountMinesAround(ny, nx, data) == 0) {
+                    Reveal(ny, nx, data, 0);
+                }
+            }
+        }
+    }
+
+    if (data->board[y][x] != 'e' && data->board[y][x] != 'f') {
+        return;
+    }
+
+    data->revealedTiles++;
     int minesAround = CountMinesAround(y, x, data);
 
     if (minesAround > 0)
@@ -59,7 +76,6 @@ void Reveal(int y, int x, board_data_t* data)
     else
     {
         data->board[y][x] = 'u';
-        data->revealedTiles++;
 
         for (int dy = -1; dy <= 1; ++dy)
         {
@@ -72,7 +88,7 @@ void Reveal(int y, int x, board_data_t* data)
 
                 if (ny >= 0 && ny < data->height && nx >= 0 && nx < data->width)
                 {
-                    Reveal(ny, nx, data);
+                    Reveal(ny, nx, data, 0);
                 }
             }
         }
@@ -97,21 +113,24 @@ void GetMove (FILE *in, board_data_t* data)
     {
         if (data->revealedTiles == 0) { /* 0 odkrytych pól = to będzie pierwszy ruch */
             PlaceMines(y, x, data);
+            MakeMove(y, x, data, action, 1);
         }
-        MakeMove(y, x, data, action);
+        else {
+            MakeMove(y, x, data, action, 0);
+        }
     }
     else 
         printf("Unknown move '%c'. \nOnly 'f' and 'r' followed by 2 numbers are accepted\n", action);
 }
 
-void MakeMove (int y, int x, board_data_t* data, char action)
+void MakeMove (int y, int x, board_data_t* data, char action, int isFirstMove)
 {
     switch (data->board[y][x])
     {
     case 'e':  /* puste zakryte pole */
         if (action == 'f') PutFlag(y, x, data->board, false);
         else
-            Reveal(y, x, data);
+            Reveal(y, x, data, isFirstMove);
         break;
     
     case 'm': /* mina */
@@ -123,7 +142,7 @@ void MakeMove (int y, int x, board_data_t* data, char action)
     case 'f': /* flaga na polu bez miny */
         if (action == 'f') printf("! Tried to put a flag on a tile that already had a flag !\n");
         else
-            Reveal(y, x, data);
+            Reveal(y, x, data, 0);
         break;
 
     case 'F': /* flaga na minie */

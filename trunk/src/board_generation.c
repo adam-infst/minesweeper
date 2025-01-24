@@ -51,7 +51,7 @@ void SetCustomParameters(board_data_t* data)
     scanf("%d", &data->mineQuantity);
 
     if (data->height < 1 || data->width < 1 || data->mineQuantity > data->height * data->width - 1) {
-        printf("! Niepoprawne dane. Utworzono planszę o średnim poziomie trudności");
+        printf("! Niepoprawne dane. Utworzono planszę o średnim poziomie trudności \n");
         SetBoardParameters(2, data);
     }
 }

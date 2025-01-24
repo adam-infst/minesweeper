@@ -26,7 +26,7 @@ int main (int argc, char **argv)
 
     if (in == stdin) {
         int difficulty;
-        printf("Podaj trudność: (1 = łatwy, 2 = średni, 3 = trudny, 0 = własny)\n");
+        printf("Podaj trudność: (1 = łatwy, 2 = średni, 3 = trudny, 0 = własny) ");
         scanf("%d", &difficulty);
 
         if (difficulty < 0 || difficulty > 3) {
