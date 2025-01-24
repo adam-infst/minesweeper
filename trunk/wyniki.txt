@@ -1,1 +1,3 @@
 Franek 24
+Adam 1
+Maciej 3
