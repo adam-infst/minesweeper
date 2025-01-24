@@ -55,7 +55,7 @@ void Reveal(int y, int x, board_data_t* data, int isFirstMove)
 
                 int ny = y + dy;
                 int nx = x + dx;
-                if (ny >= 0 && ny < data->height && nx >= 0 && nx < data->width && data->board[ny][nx] == 'e') {
+                if (ny >= 0 && ny < data->height && nx >= 0 && nx < data->width && CountMinesAround(ny, nx, data) == 0) {
                     Reveal(ny, nx, data, 0);
                 }
             }
