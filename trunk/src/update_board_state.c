@@ -174,5 +174,5 @@ void MakeMove (int y, int x, board_data_t* data, char action, int isFirstMove)
 void DetonateMine(char **board)
 {
     board[0][0] = 'B';
-    printf("Zdetonowano mine! Powinienes teraz przegrac ale jeszcze nikt nie zaimplementowal tej funkcji :)\n");
+    printf("Zdetonowano mine!\n");
 }
