@@ -44,7 +44,7 @@ int main (int argc, char **argv)
     {
         if (in == stdin) {
             PrintBoard(board_data);
-            //TestBoardGeneration(board_data);
+            TestBoardGeneration(board_data);
         }
         printf("_ x y (_ -> f - flag r - reveal)\n");
         GetMove(in, board_data);

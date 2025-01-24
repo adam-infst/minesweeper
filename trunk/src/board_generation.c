@@ -102,7 +102,7 @@ void PlaceMines (int y, int x, board_data_t* data)
         {
             data->board[a][b] = 'm';
         }
-        else i--; /* jeśli trafi na już zaminowane pole to spróbuje znowu */
+        else if (data->board[a][b] == 'm') i--; /* jeśli trafi na już zaminowane pole to spróbuje znowu */
     }
 }
 
